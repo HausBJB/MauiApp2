@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiApp2.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid
+        Padding="8,1,8,8"
+        HeightRequest="110"
+        WidthRequest="180">
+        <Border
+            BackgroundColor="AliceBlue"
+            Stroke="White"
+            StrokeShape="RoundRectangle 10"
+            StrokeThickness="0">
+            <Grid Padding="10,10,10,4" RowDefinitions="40,*">
+                <HorizontalStackLayout Margin="6,0,0,0" Spacing="8">
+                    <Border
+                        Padding="5"
+                        Stroke="red"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="0"
+                        Style="{StaticResource DefaultGradien}" />
+                    <Label
+                        Margin="5,0,0,0"
+                        FontFamily="RoboRegular"
+                        FontSize="12"
+                        Text="5"
+                        TextColor="Red"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Grid
+                    Grid.Row="1"
+                    Padding="5"
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    RowDefinitions="*,18"
+                    WidthRequest="40">
+                    <Border
+                        BackgroundColor="White"
+                        HeightRequest="32"
+                        Stroke="Blue"
+                        StrokeThickness="1"
+                        Style="{StaticResource ControlsGradienOFF}"
+                        WidthRequest="32">
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="5"
+                            TextColor="Red"
+                            VerticalOptions="Center" />
+                        <Border.StrokeShape>
+                            <EllipseGeometry
+                                Center="16,16"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Border.StrokeShape>
+                    </Border>
+                </Grid>
+                <ScrollView
+                    Grid.Row="1"
+                    Margin="0,5,0,0"
+                    HeightRequest="40"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End">
+                    <Label
+                        Padding="0,0,0,15"
+                        FontSize="Micro"
+                        HorizontalOptions="Start"
+                        LineBreakMode="WordWrap"
+                        Text="sdfdsfds"
+                        TextColor="red"
+                        VerticalOptions="End"
+                        WidthRequest="110" />
+                </ScrollView>
+
+            </Grid>
+            <Border.Shadow>
+                <Shadow
+                    Brush="{StaticResource DefaultShadow}"
+                    Opacity="{OnPlatform iOS=0.2,
+                                         Android=0.2}"
+                    Radius="{OnPlatform iOS=3,
+                                        Android=15}"
+                    Offset="{OnPlatform iOS='3,3',
+                                        Android='5,10'}" />
+            </Border.Shadow>
+        </Border>
+
+    </Grid>
+
+</ContentPage>
