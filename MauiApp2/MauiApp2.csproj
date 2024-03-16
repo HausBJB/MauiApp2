@@ -61,8 +61,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Shiny.BluetoothLE" version="3.2.4" />
-		<PackageReference Include="Shiny.Hosting.Maui" version="3.2.4" />
+		<PackageReference Include="Shiny.BluetoothLE" version="3.3.0-beta-0011" />
+		<PackageReference Include="Shiny.Hosting.Maui" version="3.3.0-beta-0011" />
 	</ItemGroup>
 
 </Project>

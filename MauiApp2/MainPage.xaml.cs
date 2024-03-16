@@ -6,11 +6,13 @@ namespace MauiApp2;
 
 public partial class MainPage : ContentPage
 {
-    private const int WaitTime = 1000;
+    private const int WaitTime = 500;
     private readonly IBleManager bleManager;
 
     public IDisposable ScannerDisposable { get; private set; }
     public IPeripheral CurrentDevice { get; private set; }
+    public IDisposable NotifyCharacteristicDisposable { get; private set; }
+    public bool Lock { get; private set; }
 
     public MainPage(IBleManager  bleManager)
     {
@@ -48,14 +50,23 @@ public partial class MainPage : ContentPage
     {
         try
         {
+            if(Lock)
+                return;
+
+            Lock = true;
+
             Console.WriteLine(".........................................................................Connect 1");
             await CurrentDevice.ConnectAsync(timeout: TimeSpan.FromSeconds(5));
+            await CurrentDevice.TryRequestMtuAsync(255);
+            await SetCharacteristics();            
             Console.WriteLine(".........................................................................Connect OK");
             await Task.Delay(WaitTime);
             CurrentDevice.CancelConnection();
             await Task.Delay(WaitTime);
             Console.WriteLine(".........................................................................Connect 2");
             await CurrentDevice.ConnectAsync(timeout: TimeSpan.FromSeconds(5));
+            await CurrentDevice.TryRequestMtuAsync(255);
+            await SetCharacteristics();
             Console.WriteLine(".........................................................................Connect 2 OK");
             await Task.Delay(WaitTime);
             CurrentDevice.CancelConnection();
@@ -63,7 +74,31 @@ public partial class MainPage : ContentPage
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());   
+        }finally { Lock = false; }
+
+    }
+
+    private async Task SetCharacteristics()
+    {
+
+        var characteristics = await CurrentDevice.GetAllCharacteristicsAsync();
+        if (characteristics != null)
+        {
+            var characteristic = characteristics.FirstOrDefault(c => c.CanNotify());
+            if (characteristic != null)
+            {
+                NotifyCharacteristicDisposable?.Dispose();
+                NotifyCharacteristicDisposable = CurrentDevice.NotifyCharacteristic(characteristic).Subscribe(d =>
+                {
+
+                });
+
+                await CurrentDevice.WaitForCharacteristicSubscriptionAsync(characteristic.Service.Uuid,characteristic.Uuid);
+            }
         }
+
+
+
 
     }
 }
